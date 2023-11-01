@@ -9,7 +9,7 @@ export class TraductorKaqchikelFunctionsStack extends cdk.Stack {
     const pipeline = new CodePipeline(this, 'Pipeline', {
       pipelineName: 'MyPipeline',
       synth: new ShellStep('Synth', {
-        input: CodePipelineSource.gitHub('MynorXico/traductor-kaqchikel-functions', 'main'{
+        input: CodePipelineSource.gitHub('MynorXico/traductor-kaqchikel-functions', 'main', {
           authentication: cdk.SecretValue.secretsManager('github-access-token-secret'),
         }),
         commands: ['npm ci', 'npm run build', 'npx cdk synth']
