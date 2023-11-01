@@ -5,8 +5,8 @@ import { TraductorKaqchikelFunctionsStack } from '../lib/traductor-kaqchikel-fun
 const app = new cdk.App();
 new TraductorKaqchikelFunctionsStack(app, 'MyPipelineStack', {
   env: {
-    account: '111111111111',
-    region: 'eu-west-1',
+    account: '842797708612',
+    region: 'us-east-1',
   }
 });
 
