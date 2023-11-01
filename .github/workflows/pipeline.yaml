@@ -95,7 +95,12 @@ jobs:
           role-session-name: feature-deployment
           role-duration-seconds: 3600
           role-skip-session-tagging: true
-
+      - name: Print AWS CLI version and current identity
+        run: |
+          aws --version
+          aws sts get-caller-identity
+      - name: Print AWS CLI configuration
+        run: aws configure list
       - name: Deploy to feature stack in the testing account
         shell: bash
         run: |
