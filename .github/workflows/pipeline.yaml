@@ -84,7 +84,12 @@ jobs:
         with:
           use-installer: true
       - run: sam build --template ${SAM_TEMPLATE} --use-container
-
+      - name: Print AWS CLI version and current identity
+        run: |
+          aws --version
+          aws sts get-caller-identity
+      - name: Print AWS CLI configuration
+        run: aws configure list
       - name: Assume the testing pipeline user role
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
@@ -95,12 +100,7 @@ jobs:
           role-session-name: feature-deployment
           role-duration-seconds: 3600
           role-skip-session-tagging: true
-      - name: Print AWS CLI version and current identity
-        run: |
-          aws --version
-          aws sts get-caller-identity
-      - name: Print AWS CLI configuration
-        run: aws configure list
+
       - name: Deploy to feature stack in the testing account
         shell: bash
         run: |
