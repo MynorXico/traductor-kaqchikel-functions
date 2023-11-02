@@ -1,0 +1,3 @@
+requests
+ctranslate2
+subword-nmt
