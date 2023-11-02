@@ -1,12 +1,60 @@
 import json
+import sys
 
-#from subword_nmt.apply_bpe import BPE
-#import ctranslate2
-#import codecs
+
+from subword_nmt.apply_bpe import BPE
+import ctranslate2
+import codecs
+
+import boto3
+import zipfile
+
+sys.path.append('../')
+def download_file_from_s3(bucket_name, key, local_file_path):
+    # Create an S3 client
+    s3 = boto3.client('s3')
+
+    # Download the file
+    try:
+        s3.download_file(bucket_name, key, local_file_path)
+        print(f"File downloaded successfully to {local_file_path}")
+    except Exception as e:
+        print(f"Error downloading file: {e}")
+
+# Example usage
+bucket_name = 'mx-models'
+key = 'bpe-vocab-es-merged-before.txt'  # Specify the key or path of the file in the bucket
+local_file_path = '/tmp/bpe-vocab-es-merged-before.txt'  # Specify the local path where you want to save the file
+
+download_file_from_s3(bucket_name, key, local_file_path)
+
+
+bucket_name = 'mx-models'
+key = '75015.zip'  # Specify the key or path of the file in the bucket
+local_file_path = '/tmp/75015.zip'  # Specify the local path where you want to save the file
+
+download_file_from_s3(bucket_name, key, local_file_path)
+
+with zipfile.ZipFile('/tmp/75015.zip', 'r') as zip_ref:
+    zip_ref.extractall('/tmp/75015')
 
 
 # import requests
 
+
+def clean(sentence):
+    sentence = sentence.lower()
+    sentence = sentence.strip()
+    sentence = sentence.replace("’", "'")
+    sentence = sentence.replace('"', "")
+    sentence = sentence.replace("’", "'")  # r"[\s]+[\n]+")
+    sentence = sentence.replace(r"\t", " ")
+    sentence = sentence.replace(r"[\s]+[\n]+", " ")
+    sentence = sentence.replace(r"\s", " ")
+    return sentence
+
+def detokenize(sentence):
+    return sentence.replace("@@ ", "")
 
 def lambda_handler(event, context):
     """Sample pure Lambda function
@@ -37,11 +85,27 @@ def lambda_handler(event, context):
     #     print(e)
 
     #     raise e
+    print("Prueba 5")
+
+    es_bpe = BPE(codecs.open("/tmp/bpe-vocab-es-merged-before.txt", encoding='utf-8'))
+    print("Prueba 6")
+
+    translator = ctranslate2.Translator("/tmp/75015/75015")
+    print("Prueba 1")
+    query = event.get('queryStringParameters', {}).get('query')
+    print("Prueba 2")
+    query = clean(query)
+    print("Prueba 3")
+    bpe_tokenized = es_bpe.process_line(query)
+    print("Prueba 4")
+    res = " ".join(translator.translate_batch([bpe_tokenized.split()])[0][0]['tokens'])
+    print("Translation: ", res)
 
     return {
         "statusCode": 200,
         "body": json.dumps({
-            "message": "hello world",
+            "translation": detokenize(res).replace("@@", ""), #"hello world",
             # "location": ip.text.replace("\n", "")
+            "source": query
         }),
     }

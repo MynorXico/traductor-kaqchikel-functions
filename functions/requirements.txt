@@ -1,3 +1,4 @@
 requests
 ctranslate2
 subword-nmt
+urllib3<2
