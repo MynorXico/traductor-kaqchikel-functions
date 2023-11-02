@@ -103,6 +103,11 @@ def lambda_handler(event, context):
 
     return {
         "statusCode": 200,
+        "headers": {
+            "Access-Control-Allow-Origin": "*",  # Adjust this based on your requirements
+            "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+            "Access-Control-Allow-Methods": "GET,OPTIONS",  # Adjust this based on your allowed methods
+        },
         "body": json.dumps({
             "translation": detokenize(res).replace("@@", ""), #"hello world",
             # "location": ip.text.replace("\n", "")
