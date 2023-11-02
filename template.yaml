@@ -29,6 +29,8 @@ Resources:
           Properties:
             Path: /hello
             Method: get
+      Policies:
+        - AmazonS3ReadOnlyAccess
 
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
