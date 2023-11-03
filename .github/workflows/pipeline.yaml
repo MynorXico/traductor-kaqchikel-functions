@@ -87,7 +87,7 @@ jobs:
       - name: Print AWS CLI version and current identity
         run: |
           aws --version
-          aws sts get-caller-identity
+          # aws sts get-caller-identity
       - name: Print AWS CLI configuration
         run: aws configure list
       - name: Assume the testing pipeline user role
