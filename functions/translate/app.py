@@ -30,13 +30,14 @@ download_file_from_s3(bucket_name, key, local_file_path)
 
 
 bucket_name = 'mx-models'
-key = '75015.zip'  # Specify the key or path of the file in the bucket
-local_file_path = '/tmp/75015.zip'  # Specify the local path where you want to save the file
+key = '90018.zip'  # Specify the key or path of the file in the bucket
+local_file_path = '/tmp/90018.zip'  # Specify the local path where you want to save the file
 
 download_file_from_s3(bucket_name, key, local_file_path)
 
-with zipfile.ZipFile('/tmp/75015.zip', 'r') as zip_ref:
-    zip_ref.extractall('/tmp/75015')
+
+with zipfile.ZipFile('/tmp/90018.zip', 'r') as zip_ref:
+    zip_ref.extractall('/tmp/90018')
 
 
 # import requests
@@ -85,21 +86,15 @@ def lambda_handler(event, context):
     #     print(e)
 
     #     raise e
-    print("Prueba 5")
 
     es_bpe = BPE(codecs.open("/tmp/bpe-vocab-es-merged-before.txt", encoding='utf-8'))
-    print("Prueba 6")
-
-    translator = ctranslate2.Translator("/tmp/75015/75015")
-    print("Prueba 1")
+    translator = ctranslate2.Translator("/tmp/90018/90018")
     query = event.get('queryStringParameters', {}).get('query')
-    print("Prueba 2")
+    print("Original text: ", query)
     query = clean(query)
-    print("Prueba 3")
     bpe_tokenized = es_bpe.process_line(query)
-    print("Prueba 4")
     res = " ".join(translator.translate_batch([bpe_tokenized.split()])[0][0]['tokens'])
-    print("Translation: ", res)
+    print("Translated text: ", res)
 
     return {
         "statusCode": 200,
