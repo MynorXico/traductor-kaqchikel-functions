@@ -40,8 +40,8 @@ Resources:
         Variables:
           NEW_RELIC_LICENSE_KEY: !Sub '{{resolve:ssm:/traductor-kaqchikel-functions/NEW_RELIC_LICENSE_KEY}}'
           NEW_RELIC_ACCOUNT_ID: !Sub '{{resolve:ssm:/traductor-kaqchikel-functions/NEW_RELIC_ACCOUNT_ID}}'
-      Layers:
-        - !Sub "arn:aws:lambda:${AWS::Region}:451483290750:layer:NewRelicPython39:51"
+      #Layers:
+      #  - !Sub "arn:aws:lambda:${AWS::Region}:451483290750:layer:NewRelicPython39:51"
 
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
