@@ -11,13 +11,6 @@ import zipfile
 
 import os
 
-secret_key = os.environ.get('SECRET_KEY')
-
-if secret_key:
-    print(f'The secret key is: {secret_key}')
-else:
-    print('SECRET_KEY environment variable is not set.')
-
 sys.path.append('../')
 def download_file_from_s3(bucket_name, key, local_file_path):
     # Create an S3 client
