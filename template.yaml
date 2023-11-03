@@ -10,8 +10,9 @@ Globals:
   Function:
     Timeout: 30
     MemorySize: 10240
-
     Tracing: Active
+    Layers:
+      - !Sub "arn:aws:lambda:${AWS::Region}:580247275435:layer:LambdaInsightsExtension:14"
   Api:
     TracingEnabled: true
 Resources:
