@@ -84,10 +84,20 @@ jobs:
         with:
           use-installer: true
       - run: sam build --template ${SAM_TEMPLATE} --use-container
+      - name: Assume the testing pipeline user role
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          aws-access-key-id: ${{ env.PIPELINE_USER_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ env.PIPELINE_USER_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.TESTING_REGION }}
+          role-to-assume: ${{ env.TESTING_PIPELINE_EXECUTION_ROLE }}
+          role-session-name: testing-packaging
+          role-duration-seconds: 3600
+          role-skip-session-tagging: true
       - name: Print AWS CLI version and current identity
         run: |
           aws --version
-          # aws sts get-caller-identity
+          aws sts get-caller-identity
       - name: Print AWS CLI configuration
         run: aws configure list
       - name: Assume the testing pipeline user role
