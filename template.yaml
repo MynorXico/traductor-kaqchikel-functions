@@ -15,6 +15,14 @@ Globals:
       - !Sub "arn:aws:lambda:${AWS::Region}:580247275435:layer:LambdaInsightsExtension:14"
   Api:
     TracingEnabled: true
+Parameters:
+  NewRelicAccountId:
+    Type: String
+    Description: 'New Relic Account ID'
+
+  NewRelicLicenseKey:
+    Type: String
+    Description: 'New Relic License Key'
 Resources:
   TranslateFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -56,20 +64,20 @@ Resources:
       ResourceGroupName:
         Ref: ApplicationResourceGroup
       AutoConfigurationEnabled: 'true'
-  NewRelicLicenseKeySSMParameter:
-    Type: 'AWS::SSM::Parameter'
-    Properties:
-      Name: '/traductor-kaqchikel-functions/NEW_RELIC_LICENSE_KEY'
-      Type: 'SecureString'
-      NoEcho: true
-      Description: 'New Relic License Key'
-  NewRelicAccountIdSSMParameter:
-    Type: 'AWS::SSM::Parameter'
-    Properties:
-      Name: '/traductor-kaqchikel-functions/NEW_RELIC_ACCOUNT_ID'
-      Type: 'SecureString'
-      NoEcho: true
-      Description: 'New Relic Account ID'
+  #NewRelicLicenseKeySSMParameter:
+  #  Type: 'AWS::SSM::Parameter'
+  #  Properties:
+  #    Name: '/traductor-kaqchikel-functions/NEW_RELIC_LICENSE_KEY
+  #    Type: 'SecureString'
+  #    NoEcho: true
+  #    Description: 'New Relic License Key'
+  #NewRelicAccountIdSSMParameter:
+  #  Type: 'AWS::SSM::Parameter'
+  #  Properties:
+  #    Name: '/traductor-kaqchikel-functions/NEW_RELIC_ACCOUNT_ID'
+  #    Type: 'SecureString'
+  #    NoEcho: true
+  #    Description: 'New Relic Account ID'
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
