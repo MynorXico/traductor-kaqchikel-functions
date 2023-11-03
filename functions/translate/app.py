@@ -9,6 +9,8 @@ import codecs
 import boto3
 import zipfile
 
+import os
+
 sys.path.append('../')
 def download_file_from_s3(bucket_name, key, local_file_path):
     # Create an S3 client
