@@ -56,20 +56,6 @@ Resources:
       ResourceGroupName:
         Ref: ApplicationResourceGroup
       AutoConfigurationEnabled: 'true'
-  #NewRelicLicenseKeySSMParameter:
-  #  Type: 'AWS::SSM::Parameter'
-  #  Properties:
-  #    Name: '/traductor-kaqchikel-functions/NEW_RELIC_LICENSE_KEY
-  #    Type: 'SecureString'
-  #    NoEcho: true
-  #    Description: 'New Relic License Key'
-  #NewRelicAccountIdSSMParameter:
-  #  Type: 'AWS::SSM::Parameter'
-  #  Properties:
-  #    Name: '/traductor-kaqchikel-functions/NEW_RELIC_ACCOUNT_ID'
-  #    Type: 'SecureString'
-  #    NoEcho: true
-  #    Description: 'New Relic Account ID'
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
