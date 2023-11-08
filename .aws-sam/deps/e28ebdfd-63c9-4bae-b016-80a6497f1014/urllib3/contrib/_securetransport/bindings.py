@@ -427,4 +427,10 @@ class CFConst:
     constants.
     """
 
+    def __init__(self):
+        pass
+
+    def __init__(self):
+        pass
+
     kCFStringEncodingUTF8 = CFStringEncoding(0x08000100)

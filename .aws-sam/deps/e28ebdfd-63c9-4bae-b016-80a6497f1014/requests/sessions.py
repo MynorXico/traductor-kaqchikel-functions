@@ -104,6 +104,12 @@ def merge_hooks(request_hooks, session_hooks, dict_class=OrderedDict):
 
 
 class SessionRedirectMixin:
+    def __init__(self):
+        pass
+
+    def __init__(self):
+        pass
+
     def get_redirect_target(self, resp):
         """Receives a Response. Returns a redirect URI or ``None``"""
         # Due to the nature of how requests processes redirects this method will

@@ -64,7 +64,7 @@ class IncrementalDecoder(codecs.BufferedIncrementalDecoder):
             raise IDNAError('Unsupported error handling \"{}\"'.format(errors))
 
         if not data:
-            return ('', 0)
+            return '', 0
 
         labels = _unicode_dots_re.split(data)
         trailing_dot = ''
@@ -88,7 +88,7 @@ class IncrementalDecoder(codecs.BufferedIncrementalDecoder):
 
         result_str = '.'.join(result) + trailing_dot
         size += len(trailing_dot)
-        return (result_str, size)
+        return result_str, size
 
 
 class StreamWriter(Codec, codecs.StreamWriter):

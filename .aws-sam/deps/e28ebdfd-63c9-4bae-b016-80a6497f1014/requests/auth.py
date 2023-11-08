@@ -69,6 +69,12 @@ def _basic_auth_str(username, password):
 class AuthBase:
     """Base class that all auth implementations derive from"""
 
+    def __init__(self):
+        pass
+
+    def __init__(self):
+        pass
+
     def __call__(self, r):
         raise NotImplementedError("Auth hooks must be callable.")
 
@@ -233,7 +239,7 @@ class HTTPDigestAuth(AuthBase):
 
         return f"Digest {base}"
 
-    def handle_redirect(self, r, **kwargs):
+    def handle_redirect(self, r):
         """Reset num_401_calls counter on redirects."""
         if r.is_redirect:
             self._thread_local.num_401_calls = 1

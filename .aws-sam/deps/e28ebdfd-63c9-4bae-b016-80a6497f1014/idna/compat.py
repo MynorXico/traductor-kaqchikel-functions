@@ -8,6 +8,6 @@ def ToASCII(label: str) -> bytes:
 def ToUnicode(label: Union[bytes, bytearray]) -> str:
     return decode(label)
 
-def nameprep(s: Any) -> None:
+def nameprep() -> None:
     raise NotImplementedError('IDNA 2008 does not utilise nameprep protocol')
 

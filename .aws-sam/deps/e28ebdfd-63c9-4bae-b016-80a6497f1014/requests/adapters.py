@@ -57,7 +57,7 @@ try:
     from urllib3.contrib.socks import SOCKSProxyManager
 except ImportError:
 
-    def SOCKSProxyManager(*args, **kwargs):
+    def SOCKSProxyManager():
         raise InvalidSchema("Missing dependencies for SOCKS support.")
 
 
@@ -213,7 +213,6 @@ class HTTPAdapter(BaseAdapter):
         elif proxy.lower().startswith("socks"):
             username, password = get_auth_from_url(proxy)
             manager = self.proxy_manager[proxy] = SOCKSProxyManager(
-                proxy,
                 username=username,
                 password=password,
                 num_pools=self._pool_connections,

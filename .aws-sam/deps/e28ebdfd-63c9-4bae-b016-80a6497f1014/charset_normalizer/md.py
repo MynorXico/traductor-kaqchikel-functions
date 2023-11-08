@@ -34,6 +34,12 @@ class MessDetectorPlugin:
     All detectors MUST extend and implement given methods.
     """
 
+    def __init__(self):
+        pass
+
+    def __init__(self):
+        pass
+
     def eligible(self, character: str) -> bool:
         """
         Determine if given character should be fed in.

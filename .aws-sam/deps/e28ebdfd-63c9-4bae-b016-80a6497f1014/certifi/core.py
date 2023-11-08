@@ -74,7 +74,7 @@ elif sys.version_info >= (3, 7):
         return _CACERT_PATH
 
     def contents() -> str:
-        return read_text("certifi", "cacert.pem", encoding="ascii")
+        return read_text("cacert.pem", encoding="ascii")
 
 else:
     import os
@@ -89,10 +89,7 @@ else:
     # so won't address issues with environments like PyOxidizer that don't set
     # __file__ on modules.
     def read_text(
-        package: Package,
-        resource: Resource,
-        encoding: str = 'utf-8',
-        errors: str = 'strict'
+            encoding: str = 'utf-8'
     ) -> str:
         with open(where(), encoding=encoding) as data:
             return data.read()
@@ -105,4 +102,4 @@ else:
         return os.path.join(f, "cacert.pem")
 
     def contents() -> str:
-        return read_text("certifi", "cacert.pem", encoding="ascii")
+        return read_text("cacert.pem", encoding="ascii")

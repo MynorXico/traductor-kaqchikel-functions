@@ -137,7 +137,7 @@ log = logging.getLogger(__name__)
 
 
 def inject_into_urllib3() -> None:
-    "Monkey-patch urllib3 with PyOpenSSL-backed SSL-support."
+    """Monkey-patch urllib3 with PyOpenSSL-backed SSL-support."""
 
     _validate_dependencies_met()
 
@@ -148,7 +148,7 @@ def inject_into_urllib3() -> None:
 
 
 def extract_from_urllib3() -> None:
-    "Undo monkey-patching by :func:`inject_into_urllib3`."
+    """Undo monkey-patching by :func:`inject_into_urllib3`."""
 
     util.SSLContext = orig_util_SSLContext
     util.ssl_.SSLContext = orig_util_SSLContext
@@ -484,10 +484,7 @@ class PyOpenSSLContext:
     def wrap_socket(
         self,
         sock: socket_cls,
-        server_side: bool = False,
-        do_handshake_on_connect: bool = True,
-        suppress_ragged_eofs: bool = True,
-        server_hostname: bytes | str | None = None,
+            server_hostname: bytes | str | None = None,
     ) -> WrappedSocket:
         cnx = OpenSSL.SSL.Connection(self._ctx, sock)
 
@@ -539,10 +536,6 @@ class PyOpenSSLContext:
 
 
 def _verify_callback(
-    cnx: OpenSSL.SSL.Connection,
-    x509: X509,
-    err_no: int,
-    err_depth: int,
-    return_code: int,
+        err_no: int,
 ) -> bool:
     return err_no == 0

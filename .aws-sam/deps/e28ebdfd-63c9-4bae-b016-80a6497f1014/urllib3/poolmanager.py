@@ -621,7 +621,7 @@ class ProxyManager(PoolManager):
     def urlopen(  # type: ignore[override]
         self, method: str, url: str, redirect: bool = True, **kw: typing.Any
     ) -> BaseHTTPResponse:
-        "Same as HTTP(S)ConnectionPool.urlopen, ``url`` must be absolute."
+        """Same as HTTP(S)ConnectionPool.urlopen, ``url`` must be absolute."""
         u = parse_url(url)
         if not connection_requires_http_tunnel(self.proxy, self.proxy_config, u.scheme):
             # For connections using HTTP CONNECT, httplib sets the necessary

@@ -60,6 +60,7 @@ def from_bytes(
     Custom logging format and handler can be set manually.
     """
 
+    global previous_logger_level, encoding_soft_failed, previous_logger_level, previous_logger_level, previous_logger_level
     if not isinstance(sequences, (bytearray, bytes)):
         raise TypeError(
             "Expected object of type bytes or bytearray, got: {0}".format(

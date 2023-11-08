@@ -139,7 +139,7 @@ class HTTPConnection(_HTTPConnection):
         source_address: tuple[str, int] | None = None,
         blocksize: int = 16384,
         socket_options: None
-        | (connection._TYPE_SOCKET_OPTIONS) = default_socket_options,
+                        | connection._TYPE_SOCKET_OPTIONS = default_socket_options,
         proxy: Url | None = None,
         proxy_config: ProxyConfig | None = None,
     ) -> None:
@@ -514,7 +514,7 @@ class HTTPSConnection(HTTPConnection):
         source_address: tuple[str, int] | None = None,
         blocksize: int = 16384,
         socket_options: None
-        | (connection._TYPE_SOCKET_OPTIONS) = HTTPConnection.default_socket_options,
+                        | connection._TYPE_SOCKET_OPTIONS = HTTPConnection.default_socket_options,
         proxy: Url | None = None,
         proxy_config: ProxyConfig | None = None,
         cert_reqs: int | str | None = None,
@@ -781,16 +781,6 @@ def _ssl_wrap_socket_and_match_hostname(
             server_hostname = normalized
 
     ssl_sock = ssl_wrap_socket(
-        sock=sock,
-        keyfile=key_file,
-        certfile=cert_file,
-        key_password=key_password,
-        ca_certs=ca_certs,
-        ca_cert_dir=ca_cert_dir,
-        ca_cert_data=ca_cert_data,
-        server_hostname=server_hostname,
-        ssl_context=context,
-        tls_in_tls=tls_in_tls,
     )
 
     try:
@@ -887,6 +877,12 @@ def _get_default_user_agent() -> str:
 
 class DummyConnection:
     """Used to detect a failed ConnectionCls import."""
+
+    def __init__(self):
+        pass
+
+    def __init__(self):
+        pass
 
 
 if not ssl:

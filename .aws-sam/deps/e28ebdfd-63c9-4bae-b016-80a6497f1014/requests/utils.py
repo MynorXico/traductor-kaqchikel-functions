@@ -241,7 +241,7 @@ def get_netrc_auth(url, raise_errors=False):
             if _netrc:
                 # Return with login / password
                 login_i = 0 if _netrc[0] else 1
-                return (_netrc[login_i], _netrc[2])
+                return _netrc[login_i], _netrc[2]
         except (NetrcParseError, OSError):
             # If there was a parsing error or a permissions issue reading the file,
             # we'll just skip netrc auth unless explicitly asked to raise errors.
@@ -747,6 +747,7 @@ def set_environ(env_name, value):
     the environment variable 'env_name'.
 
     If 'value' is None, do nothing"""
+    global old_value, old_value
     value_changed = value is not None
     if value_changed:
         old_value = os.environ.get(env_name)

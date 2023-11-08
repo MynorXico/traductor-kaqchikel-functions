@@ -29,8 +29,7 @@ def to_str(
 
 
 def reraise(
-    tp: type[BaseException] | None,
-    value: BaseException,
+        value: BaseException,
     tb: TracebackType | None = None,
 ) -> typing.NoReturn:
     try:
@@ -38,5 +37,5 @@ def reraise(
             raise value.with_traceback(tb)
         raise value
     finally:
-        value = None  # type: ignore[assignment]
-        tb = None
+        None
+        None

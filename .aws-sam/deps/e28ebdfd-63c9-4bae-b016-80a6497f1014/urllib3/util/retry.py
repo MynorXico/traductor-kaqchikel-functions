@@ -442,7 +442,7 @@ class Retry:
         """
         if self.total is False and error:
             # Disabled, indicate to re-raise the error.
-            raise reraise(type(error), error, _stacktrace)
+            raise reraise(error, _stacktrace)
 
         total = self.total
         if total is not None:
@@ -460,14 +460,14 @@ class Retry:
         if error and self._is_connection_error(error):
             # Connect retry?
             if connect is False:
-                raise reraise(type(error), error, _stacktrace)
+                raise reraise(error, _stacktrace)
             elif connect is not None:
                 connect -= 1
 
         elif error and self._is_read_error(error):
             # Read retry?
             if read is False or method is None or not self._is_method_retryable(method):
-                raise reraise(type(error), error, _stacktrace)
+                raise reraise(error, _stacktrace)
             elif read is not None:
                 read -= 1
 

@@ -59,7 +59,7 @@ def clean(sentence):
 def detokenize(sentence):
     return sentence.replace("@@ ", "")
 
-def lambda_handler(event, context):
+def lambda_handler(event):
     """Sample pure Lambda function
 
     Parameters

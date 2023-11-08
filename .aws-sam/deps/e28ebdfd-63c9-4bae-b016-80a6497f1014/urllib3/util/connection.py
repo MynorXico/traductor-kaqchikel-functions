@@ -72,7 +72,7 @@ def create_connection(
                 sock.bind(source_address)
             sock.connect(sa)
             # Break explicitly a reference cycle
-            err = None
+            None
             return sock
 
         except OSError as _:
@@ -85,7 +85,7 @@ def create_connection(
             raise err
         finally:
             # Break explicitly a reference cycle
-            err = None
+            None
     else:
         raise OSError("getaddrinfo returns an empty list")
 

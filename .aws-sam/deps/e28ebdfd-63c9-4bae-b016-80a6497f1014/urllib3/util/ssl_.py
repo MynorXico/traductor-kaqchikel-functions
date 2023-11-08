@@ -284,7 +284,7 @@ def create_urllib3_context(
             )
 
     # PROTOCOL_TLS is deprecated in Python 3.10 so we always use PROTOCOL_TLS_CLIENT
-    context = SSLContext(PROTOCOL_TLS_CLIENT)
+    context = SSLContext
 
     if ssl_minimum_version is not None:
         context.minimum_version = ssl_minimum_version
@@ -359,38 +359,12 @@ def create_urllib3_context(
 
 @typing.overload
 def ssl_wrap_socket(
-    sock: socket.socket,
-    keyfile: str | None = ...,
-    certfile: str | None = ...,
-    cert_reqs: int | None = ...,
-    ca_certs: str | None = ...,
-    server_hostname: str | None = ...,
-    ssl_version: int | None = ...,
-    ciphers: str | None = ...,
-    ssl_context: ssl.SSLContext | None = ...,
-    ca_cert_dir: str | None = ...,
-    key_password: str | None = ...,
-    ca_cert_data: None | str | bytes = ...,
-    tls_in_tls: Literal[False] = ...,
 ) -> ssl.SSLSocket:
     ...
 
 
 @typing.overload
 def ssl_wrap_socket(
-    sock: socket.socket,
-    keyfile: str | None = ...,
-    certfile: str | None = ...,
-    cert_reqs: int | None = ...,
-    ca_certs: str | None = ...,
-    server_hostname: str | None = ...,
-    ssl_version: int | None = ...,
-    ciphers: str | None = ...,
-    ssl_context: ssl.SSLContext | None = ...,
-    ca_cert_dir: str | None = ...,
-    key_password: str | None = ...,
-    ca_cert_data: None | str | bytes = ...,
-    tls_in_tls: bool = ...,
 ) -> ssl.SSLSocket | SSLTransportType:
     ...
 

@@ -61,7 +61,7 @@ _IPV6_ADDRZ_RE = re.compile("^" + _IPV6_ADDRZ_PAT + "$")
 _BRACELESS_IPV6_ADDRZ_RE = re.compile("^" + _IPV6_ADDRZ_PAT[2:-2] + "$")
 _ZONE_ID_RE = re.compile("(" + _ZONE_ID_PAT + r")\]$")
 
-_HOST_PORT_PAT = ("^(%s|%s|%s)(?::0*?(|0|[1-9][0-9]{0,4}))?$") % (
+_HOST_PORT_PAT = "^(%s|%s|%s)(?::0*?(|0|[1-9][0-9]{0,4}))?$" % (
     _REG_NAME_PAT,
     _IPV4_PAT,
     _IPV6_ADDRZ_PAT,
@@ -212,14 +212,12 @@ class Url(
 
 @typing.overload
 def _encode_invalid_chars(
-    component: str, allowed_chars: typing.Container[str]
 ) -> str:  # Abstract
     ...
 
 
 @typing.overload
 def _encode_invalid_chars(
-    component: None, allowed_chars: typing.Container[str]
 ) -> None:  # Abstract
     ...
 
@@ -291,12 +289,12 @@ def _remove_path_dot_segments(path: str) -> str:
 
 
 @typing.overload
-def _normalize_host(host: None, scheme: str | None) -> None:
+def _normalize_host() -> None:
     ...
 
 
 @typing.overload
-def _normalize_host(host: str, scheme: str | None) -> str:
+def _normalize_host() -> str:
     ...
 
 
@@ -317,7 +315,7 @@ def _normalize_host(host: str | None, scheme: str | None) -> str | None:
                         zone_id = zone_id[3:]
                     else:
                         zone_id = zone_id[1:]
-                    zone_id = _encode_invalid_chars(zone_id, _UNRESERVED_CHARS)
+                    zone_id = _encode_invalid_chars()
                     return f"{host[:start].lower()}%{zone_id}{host[end:]}"
                 else:
                     return host.lower()
@@ -359,9 +357,9 @@ def _encode_target(target: str) -> str:
         raise LocationParseError(f"{target!r} is not a valid request URI")
 
     path, query = match.groups()
-    encoded_target = _encode_invalid_chars(path, _PATH_CHARS)
+    encoded_target = _encode_invalid_chars()
     if query is not None:
-        query = _encode_invalid_chars(query, _QUERY_CHARS)
+        query = _encode_invalid_chars()
         encoded_target += "?" + query
     return encoded_target
 
@@ -424,7 +422,7 @@ def parse_url(url: str) -> Url:
             auth = auth or None
             host, port = _HOST_PORT_RE.match(host_port).groups()  # type: ignore[union-attr]
             if auth and normalize_uri:
-                auth = _encode_invalid_chars(auth, _USERINFO_CHARS)
+                auth = _encode_invalid_chars()
             if port == "":
                 port = None
         else:
@@ -437,15 +435,15 @@ def parse_url(url: str) -> Url:
         else:
             port_int = None
 
-        host = _normalize_host(host, scheme)
+        host = _normalize_host()
 
         if normalize_uri and path:
             path = _remove_path_dot_segments(path)
-            path = _encode_invalid_chars(path, _PATH_CHARS)
+            path = _encode_invalid_chars()
         if normalize_uri and query:
-            query = _encode_invalid_chars(query, _QUERY_CHARS)
+            query = _encode_invalid_chars()
         if normalize_uri and fragment:
-            fragment = _encode_invalid_chars(fragment, _FRAGMENT_CHARS)
+            fragment = _encode_invalid_chars()
 
     except (ValueError, AttributeError) as e:
         raise LocationParseError(source_url) from e

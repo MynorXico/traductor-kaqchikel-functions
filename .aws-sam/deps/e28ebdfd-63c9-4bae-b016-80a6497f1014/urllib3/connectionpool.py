@@ -84,7 +84,7 @@ class ConnectionPool:
         if not host:
             raise LocationValueError("No host specified.")
 
-        self.host = _normalize_host(host, scheme=self.scheme)
+        self.host = _normalize_host()
         self.port = port
 
         # This property uses 'normalize_host()' (not '_normalize_host()')
@@ -583,7 +583,7 @@ class HTTPConnectionPool(ConnectionPool, RequestMethods):
         scheme, _, host, port, *_ = parse_url(url)
         scheme = scheme or "http"
         if host is not None:
-            host = _normalize_host(host, scheme=scheme)
+            host = _normalize_host()
 
         # Use explicit default port for comparison when none is given
         if self.port and not port:
@@ -706,6 +706,7 @@ class HTTPConnectionPool(ConnectionPool, RequestMethods):
             redirect. Typically this won't need to be set because urllib3 will
             auto-populate the value when needed.
         """
+        global response
         parsed_url = parse_url(url)
         destination_scheme = parsed_url.scheme
 
@@ -1138,12 +1139,12 @@ def connection_from_url(url: str, **kw: typing.Any) -> HTTPConnectionPool:
 
 
 @typing.overload
-def _normalize_host(host: None, scheme: str | None) -> None:
+def _normalize_host() -> None:
     ...
 
 
 @typing.overload
-def _normalize_host(host: str, scheme: str | None) -> str:
+def _normalize_host() -> str:
     ...
 
 

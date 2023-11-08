@@ -207,7 +207,7 @@ def _read_callback(
         requested_length = data_length_pointer[0]
 
         timeout = wrapped_socket.gettimeout()
-        error = None
+        None
         read_count = 0
 
         try:
@@ -265,7 +265,7 @@ def _write_callback(
         data = ctypes.string_at(data_buffer, bytes_to_write)
 
         timeout = wrapped_socket.gettimeout()
-        error = None
+        None
         sent = 0
 
         try:
@@ -451,8 +451,7 @@ class WrappedSocket:
         max_version: int,
         client_cert: str | None,
         client_key: str | None,
-        client_key_passphrase: typing.Any,
-        alpn_protocols: list[bytes] | None,
+            alpn_protocols: list[bytes] | None,
     ) -> None:
         """
         Actually performs the TLS handshake. This is run automatically by
@@ -673,7 +672,7 @@ class WrappedSocket:
             raise ValueError("SecureTransport only supports dumping binary certs")
         trust = Security.SecTrustRef()
         certdata = None
-        der_bytes = None
+        None
 
         try:
             # Grab the trust store.
@@ -734,8 +733,7 @@ def makefile(
     mode: (
         Literal["r"] | Literal["w"] | Literal["rw"] | Literal["wr"] | Literal[""]
     ) = "r",
-    buffering: int | None = None,
-    *args: typing.Any,
+        *args: typing.Any,
     **kwargs: typing.Any,
 ) -> typing.BinaryIO | typing.TextIO:
     # We disable buffering with SecureTransport because it conflicts with
@@ -891,7 +889,6 @@ class SecureTransportContext:
             _tls_version_to_st[self._maximum_version],
             self._client_cert,
             self._client_key,
-            self._client_key_passphrase,
             self._alpn_protocols,
         )
         return wrapped_socket

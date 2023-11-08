@@ -179,7 +179,7 @@ def valid_contextj(label: str, pos: int) -> bool:
         return False
 
 
-def valid_contexto(label: str, pos: int, exception: bool = False) -> bool:
+def valid_contexto(label: str, pos: int) -> bool:
     cp_value = ord(label[pos])
 
     if cp_value == 0x00b7:

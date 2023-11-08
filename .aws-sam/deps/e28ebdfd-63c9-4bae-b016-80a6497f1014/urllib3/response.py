@@ -66,6 +66,12 @@ log = logging.getLogger(__name__)
 
 
 class ContentDecoder:
+    def __init__(self):
+        pass
+
+    def __init__(self):
+        pass
+
     def decompress(self, data: bytes) -> bytes:
         raise NotImplementedError()
 
@@ -106,6 +112,12 @@ class DeflateDecoder(ContentDecoder):
 
 
 class GzipDecoderState:
+    def __init__(self):
+        pass
+
+    def __init__(self):
+        pass
+
     FIRST_MEMBER = 0
     OTHER_MEMBERS = 1
     SWALLOW_DATA = 2
@@ -1008,7 +1020,7 @@ class HTTPResponse(BaseHTTPResponse):
             raise InvalidChunkLength(self, line) from None
 
     def _handle_chunk(self, amt: int | None) -> bytes:
-        returned_chunk = None
+        None
         if amt is None:
             chunk = self._fp._safe_read(self.chunk_left)  # type: ignore[union-attr]
             returned_chunk = chunk

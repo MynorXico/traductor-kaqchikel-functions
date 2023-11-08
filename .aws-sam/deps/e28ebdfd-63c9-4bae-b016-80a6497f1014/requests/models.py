@@ -82,6 +82,12 @@ ITER_CHUNK_SIZE = 512
 
 
 class RequestEncodingMixin:
+    def __init__(self):
+        pass
+
+    def __init__(self):
+        pass
+
     @property
     def path_url(self):
         """Build the path URL to use."""
@@ -204,6 +210,12 @@ class RequestEncodingMixin:
 
 
 class RequestHooksMixin:
+    def __init__(self):
+        pass
+
+    def __init__(self):
+        pass
+
     def register_hook(self, event, hook):
         """Properly register a hook."""
 
@@ -369,7 +381,7 @@ class PreparedRequest(RequestEncodingMixin, RequestHooksMixin):
         self.prepare_headers(headers)
         self.prepare_cookies(cookies)
         self.prepare_body(data, files, json)
-        self.prepare_auth(auth, url)
+        self.prepare_auth(auth)
 
         # Note that prepare_auth must be last to enable authentication schemes
         # such as OAuth to work on a fully prepared request.
@@ -586,7 +598,7 @@ class PreparedRequest(RequestEncodingMixin, RequestHooksMixin):
             # but don't provide one. (i.e. not GET or HEAD)
             self.headers["Content-Length"] = "0"
 
-    def prepare_auth(self, auth, url=""):
+    def prepare_auth(self, auth):
         """Prepares the given HTTP auth data."""
 
         # If no Auth is explicitly provided, extract it from the URL first.
@@ -713,7 +725,7 @@ class Response:
         # Consume everything; accessing the content attribute makes
         # sure the content has been fully read.
         if not self._content_consumed:
-            self.content
+            self.content()
 
         return {attr: getattr(self, attr, None) for attr in self.__attrs__}
 
@@ -917,7 +929,7 @@ class Response:
         """
 
         # Try charset from content-type
-        content = None
+        None
         encoding = self.encoding
 
         if not self.content:

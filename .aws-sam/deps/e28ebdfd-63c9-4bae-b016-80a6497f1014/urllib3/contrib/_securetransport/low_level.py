@@ -271,6 +271,7 @@ def _load_items_from_file(
     Returns a tuple of lists: the first list is a list of identities, the
     second a list of certs.
     """
+    global filedata
     certificates = []
     identities = []
     result_array = None
@@ -316,7 +317,7 @@ def _load_items_from_file(
 
         CoreFoundation.CFRelease(filedata)
 
-    return (identities, certificates)
+    return identities, certificates
 
 
 def _load_client_cert_chain(keychain: SecKeychainRef, *paths: str | None) -> CFArray:
@@ -421,6 +422,12 @@ class SecurityConst:
     """
     A class object that acts as essentially a namespace for Security constants.
     """
+
+    def __init__(self):
+        pass
+
+    def __init__(self):
+        pass
 
     kSSLSessionOptionBreakOnServerAuth = 0
 
