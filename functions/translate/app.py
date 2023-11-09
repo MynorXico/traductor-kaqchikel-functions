@@ -1,7 +1,6 @@
 import json
 import sys
 
-
 from subword_nmt.apply_bpe import BPE
 import ctranslate2
 import codecs
@@ -12,16 +11,19 @@ import zipfile
 import os
 
 sys.path.append('../')
-def download_file_from_s3(bucket_name, key, local_file_path):
+
+
+def download_file_from_s3(s3_bucket, key, local_path):
     # Create an S3 client
     s3 = boto3.client('s3')
 
     # Download the file
     try:
-        s3.download_file(bucket_name, key, local_file_path)
-        print(f"File downloaded successfully to {local_file_path}")
+        s3.download_file(s3_bucket, key, local_path)
+        print(f"File downloaded successfully to {local_path}")
     except Exception as e:
         print(f"Error downloading file: {e}")
+
 
 # Example usage
 bucket_name = 'mx-models'
@@ -30,19 +32,15 @@ local_file_path = '/tmp/bpe-vocab-es-merged-before.txt'  # Specify the local pat
 
 download_file_from_s3(bucket_name, key, local_file_path)
 
-
+model_name = "215043";
 bucket_name = 'mx-models'
-key = '90018.zip'  # Specify the key or path of the file in the bucket
-local_file_path = '/tmp/90018.zip'  # Specify the local path where you want to save the file
+key = f"{model_name}.zip"  # Specify the key or path of the file in the bucket
+local_file_path = f"/tmp/{model_name}.zip"  # Specify the local path where you want to save the file
 
 download_file_from_s3(bucket_name, key, local_file_path)
 
-
-with zipfile.ZipFile('/tmp/90018.zip', 'r') as zip_ref:
-    zip_ref.extractall('/tmp/90018')
-
-
-# import requests
+with zipfile.ZipFile(f"/tmp/{model_name}.zip", 'r') as zip_ref:
+    zip_ref.extractall(f"/tmp/{model_name}")
 
 
 def clean(sentence):
@@ -56,8 +54,10 @@ def clean(sentence):
     sentence = sentence.replace(r"\s", " ")
     return sentence
 
+
 def detokenize(sentence):
     return sentence.replace("@@ ", "")
+
 
 def lambda_handler(event, context):
     """Sample pure Lambda function
@@ -90,7 +90,7 @@ def lambda_handler(event, context):
     #     raise e
 
     es_bpe = BPE(codecs.open("/tmp/bpe-vocab-es-merged-before.txt", encoding='utf-8'))
-    translator = ctranslate2.Translator("/tmp/90018/90018")
+    translator = ctranslate2.Translator(f"/tmp/{model_name}/{model_name}")
     query = event.get('queryStringParameters', {}).get('query')
     print("Original text: ", query)
     query = clean(query)
@@ -106,7 +106,7 @@ def lambda_handler(event, context):
             "Access-Control-Allow-Methods": "GET,OPTIONS",  # Adjust this based on your allowed methods
         },
         "body": json.dumps({
-            "translation": detokenize(res).replace("@@", ""), #"hello world",
+            "translation": detokenize(res).replace("@@", ""),
             # "location": ip.text.replace("\n", "")
             "source": query
         }),
