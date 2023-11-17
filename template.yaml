@@ -36,6 +36,7 @@ Resources:
             AllowOrigin: "'*'"
       Policies:
         - AmazonS3ReadOnlyAccess
+        - AmazonSSMReadOnlyAccess
       Environment:
         Variables:
           NEW_RELIC_LICENSE_KEY: !Sub '{{resolve:ssm:/traductor-kaqchikel-functions/NEW_RELIC_LICENSE_KEY}}'
