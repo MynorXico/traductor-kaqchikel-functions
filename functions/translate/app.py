@@ -10,7 +10,6 @@ init_translator()
 
 def lambda_handler(event, context):
     query = event.get('queryStringParameters', {}).get('query')
-    model = event.get('queryStringParameters', {}).get('model')
     return {
         "statusCode": 200,
         "headers": {
@@ -19,7 +18,7 @@ def lambda_handler(event, context):
             "Access-Control-Allow-Methods": "GET,OPTIONS",  # Adjust this based on your allowed methods
         },
         "body": json.dumps({
-            "translation": translate_text(query, model),
+            "translation": translate_text(query),
             "source": query
         }),
     }
