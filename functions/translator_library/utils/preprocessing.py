@@ -10,4 +10,4 @@ def clean(sentence):
     return sentence
 
 def detokenize(sentence):
-    return sentence.replace("@@ ", "")
+    return sentence.replace("@@ ", "").replace("￭ ", "").replace(" ￭", "")

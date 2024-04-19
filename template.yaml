@@ -16,6 +16,27 @@ Globals:
   Api:
     TracingEnabled: true
 Resources:
+  TranslateFunctionV2:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/
+      Handler: translate_v2.app.lambda_handler
+      Runtime: python3.9
+      Architectures:
+      - x86_64
+      Events:
+        Translate:
+          Type: Api
+          Properties:
+            Path: /translate_v2
+            Method: get
+          Cors:
+            AllowMethods: "'GET, OPTIONS'"
+            AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+            AllowOrigin: "'*'"
+      Policies:
+        - AmazonS3ReadOnlyAccess
+        - AmazonSSMReadOnlyAccess
   TranslateFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
@@ -41,6 +62,7 @@ Resources:
         Variables:
           NEW_RELIC_LICENSE_KEY: !Sub '{{resolve:ssm:/traductor-kaqchikel-functions/NEW_RELIC_LICENSE_KEY}}'
           NEW_RELIC_ACCOUNT_ID: !Sub '{{resolve:ssm:/traductor-kaqchikel-functions/NEW_RELIC_ACCOUNT_ID}}'
+
       #Layers:
       #  - !Sub "arn:aws:lambda:${AWS::Region}:451483290750:layer:NewRelicPython39:51"
 
