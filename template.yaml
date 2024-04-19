@@ -22,7 +22,8 @@ Resources:
       CodeUri: functions/
       Handler: translate_v2.app.lambda_handler
       Runtime: python3.9
-      EphemeralStorage: 1024
+      EphemeralStorage:
+        Size: 1024
       Architectures:
       - x86_64
       Events:
