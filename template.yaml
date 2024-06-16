@@ -8,7 +8,7 @@ Description: >
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 30
+    Timeout: 300
     MemorySize: 10240
     Tracing: Active
     Layers:
@@ -39,34 +39,6 @@ Resources:
       Policies:
         - AmazonS3ReadOnlyAccess
         - AmazonSSMReadOnlyAccess
-  TranslateFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: functions/
-      Handler:  translate.app.lambda_handler
-      Runtime: python3.9
-      Architectures:
-      - x86_64
-      Events:
-        HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /translate
-            Method: get
-          Cors:
-            AllowMethods: "'GET,OPTIONS'"
-            AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-            AllowOrigin: "'*'"
-      Policies:
-        - AmazonS3ReadOnlyAccess
-        - AmazonSSMReadOnlyAccess
-      Environment:
-        Variables:
-          NEW_RELIC_LICENSE_KEY: !Sub '{{resolve:ssm:/traductor-kaqchikel-functions/NEW_RELIC_LICENSE_KEY}}'
-          NEW_RELIC_ACCOUNT_ID: !Sub '{{resolve:ssm:/traductor-kaqchikel-functions/NEW_RELIC_ACCOUNT_ID}}'
-      #Layers:
-      #  - !Sub "arn:aws:lambda:${AWS::Region}:451483290750:layer:NewRelicPython39:51"
-
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
     Properties:
@@ -87,9 +59,9 @@ Outputs:
   HelloWorldApi:
     Description: API Gateway endpoint URL for Prod stage for Hello World function
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/translate/"
-  TranslateFunction:
+  TranslateFunctionV2:
     Description: Hello World Lambda Function ARN
-    Value: !GetAtt TranslateFunction.Arn
+    Value: !GetAtt TranslateFunctionV2.Arn
   TranslateFunctionIamRole:
     Description: Implicit IAM Role created for Hello World function
     Value: !GetAtt TranslateFunctionRole.Arn
