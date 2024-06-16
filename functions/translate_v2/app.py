@@ -3,9 +3,9 @@ import sys
 
 sys.path.append('../')
 from translator_library.service.translator_v2 import translate_text
-from translator_library.service.translator_v2 import init_translator
+#from translator_library.service.translator_v2 import init_translator
 
-init_translator()
+#init_translator()
 
 
 def lambda_handler(event, context):
