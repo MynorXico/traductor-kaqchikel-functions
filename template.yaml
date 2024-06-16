@@ -62,6 +62,3 @@ Outputs:
   TranslateFunctionV2:
     Description: Hello World Lambda Function ARN
     Value: !GetAtt TranslateFunctionV2.Arn
-  TranslateFunctionIamRole:
-    Description: Implicit IAM Role created for Hello World function
-    Value: !GetAtt TranslateFunctionRole.Arn
