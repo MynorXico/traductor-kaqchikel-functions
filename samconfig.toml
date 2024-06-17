@@ -20,7 +20,7 @@ capabilities = "CAPABILITY_IAM"
 
 [default.package.parameters]
 resolve_image_repos = true
-image_repositories = ["842797708612.dkr.ecr.us-east-1.amazonaws.com/kaqchikeltranslatorfunctionsstg6235bd02/translatefunctionv31fa0dfd9repo"]
+image_repository = "842797708612.dkr.ecr.us-east-1.amazonaws.com/kaqchikeltranslatorfunctionsstg6235bd02/translatefunctionv31fa0dfd9repo"
 #resolve_s3 = true
 
 [default.sync.parameters]
