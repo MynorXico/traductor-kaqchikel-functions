@@ -11,34 +11,35 @@ Globals:
     Timeout: 300
     MemorySize: 10240
     Tracing: Active
-    Layers:
-      - !Sub "arn:aws:lambda:${AWS::Region}:580247275435:layer:LambdaInsightsExtension:14"
+    #Layers:
+    #  - !Sub "arn:aws:lambda:${AWS::Region}:580247275435:layer:LambdaInsightsExtension:14"
   Api:
     TracingEnabled: true
 Resources:
-  TranslateFunctionV2:
-    Type: AWS::Serverless::Function
+  TranslateFunctionV3:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: functions/
-      Handler: translate_v2.app.lambda_handler
-      Runtime: python3.9
-      EphemeralStorage:
-        Size: 1024
+      PackageType: Image
       Architectures:
-      - x86_64
+        - x86_64
       Events:
-        Translate:
-          Type: Api
+        HelloWorld:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /translate_v2
             Method: get
           Cors:
             AllowMethods: "'GET, OPTIONS'"
             AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-            AllowOrigin: "'*'"
+      EphemeralStorage:
+        Size: 1024
       Policies:
         - AmazonS3ReadOnlyAccess
         - AmazonSSMReadOnlyAccess
+    Metadata:
+      Dockerfile: Dockerfile
+      DockerContext: ./hello_world
+      DockerTag: python3.9-v1
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
     Properties:
@@ -59,6 +60,6 @@ Outputs:
   HelloWorldApi:
     Description: API Gateway endpoint URL for Prod stage for Hello World function
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/translate/"
-  TranslateFunctionV2:
+  TranslateFunctionV3:
     Description: Hello World Lambda Function ARN
-    Value: !GetAtt TranslateFunctionV2.Arn
+    Value: !GetAtt TranslateFunctionV3.Arn
