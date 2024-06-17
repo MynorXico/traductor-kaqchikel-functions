@@ -19,6 +19,8 @@ capabilities = "CAPABILITY_IAM"
 #resolve_s3 = true
 
 [default.package.parameters]
+resolve_image_repos = true
+
 #resolve_s3 = true
 
 [default.sync.parameters]
