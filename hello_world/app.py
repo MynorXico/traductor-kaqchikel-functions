@@ -1,6 +1,6 @@
 import json
 
-from lib.service.translator_v2 import translate_text
+from library.service.translator_v2 import translate_text
 
 def lambda_handler(event, context):
     print("Lambda handler:")
