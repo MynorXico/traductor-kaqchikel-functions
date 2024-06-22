@@ -38,7 +38,7 @@ Resources:
         - AmazonSSMReadOnlyAccess
     Metadata:
       Dockerfile: Dockerfile
-      DockerContext: ./hello_world
+      DockerContext: ./translate-function
       DockerTag: python3.9-v1
   ApplicationResourceGroup:
     Type: AWS::ResourceGroups::Group
